@@ -14,7 +14,7 @@ const telloSockets: TelloSocket[] = [
 /**
  * Sending  "command" message to active sdk mode
  */
-(new DroneCommandSocket(io)).sendMessage('command');
+//(new DroneCommandSocket(io)).sendMessage('command').then().catch();
 
 /**
  *  For each new connection
@@ -29,3 +29,13 @@ server.listen(7000, () => {
     console.log('server is up and listening');
 });
 
+const telloCommandConnection = new DroneCommandSocket(io);
+
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+readline.on("line", (input: string) => {
+    telloCommandConnection.sendMessage(input);
+});

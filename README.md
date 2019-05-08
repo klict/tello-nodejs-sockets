@@ -2,7 +2,7 @@
   
 ## What it's meant for
 This project has only one purpose and that is to be a bridge. It's a  bridge to the udp sockets of the tello drone.
-Udp sockets are inaccesible for a web application that's why i have created this project. This project opens 1 socket which has 2 events; command and state. 
+Udp sockets are inaccesible for a web application that's why i have created this project. This project This project opens 1 socket which has 2 events; command and state. 
 
 ## state of the project
 It's still a work in progress. 
@@ -18,18 +18,16 @@ To start the server you only need the following command name:
 npm start  
 ```  
 
-This will open socket with socket.io  at 
+This will open socket with socket.io at 
 ```
 address: 127.0.0.1
 port: 7000
 ```
 
-To connect to the socket you will need to have installed socket.io client library. 
-After you have installed this library you can connect to it.
-
-
-
 ### example 
+Your project need to use socket.io-client if you wish to connect to the socket.
+
+
 ```
  var socket = io('http://127.0.0.1:7000');  
  // to send a command to the drone
@@ -46,8 +44,9 @@ First of all you need to have installed
 ```  
 1. typescript
 2. nodejs  
-3. tello drone
 ```  
+
+Als you need to own a tello drone.
   
 ### Installing  
   

@@ -16,6 +16,15 @@ export class DroneCommandSocket implements TelloSocket {
     sendMessage(msg: string): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             console.log('command "' + msg + '" sent');
+
+            // listen for response
+            this.telloSocketConnection.once('message', (message, info) => {
+
+                console.log("received response for the following message: " + message);
+                console.log("info: ", info);
+                resolve(message.toString());
+            });
+
             // send command
             this.telloSocketConnection.send(msg, 0, msg.length, this.TELLO_COMMAND_CONNECTION_PORT, this.TELLO_COMMAND_CONNECTION_ADDRESS, error => {
                 if (error) {
@@ -25,20 +34,12 @@ export class DroneCommandSocket implements TelloSocket {
                 }
             });
 
-            // listen for response
-            this.telloSocketConnection.on('message', (message, info) => {
-
-                console.log("received response for the following message: " + message);
-                console.log("info: ", info);
-
-                resolve(message.toString());
-            });
         });
     }
 
     initialize(socket: Socket): void {
         socket.on('command', (command: string) => {
-            this.sendMessage(command).then(result => this.socketIo.sockets.emit('message', result.toString()));
+            this.sendMessage(command).then(result => this.socketIo.sockets.emit('response', result.toString()));
         });
     }
 
