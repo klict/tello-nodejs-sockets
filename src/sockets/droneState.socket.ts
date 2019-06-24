@@ -1,6 +1,5 @@
 import {createSocket, Socket} from "dgram";
 import {TelloSocket} from "./telloSocket";
-import {Key} from "readline";
 
 export class DroneStateSocket implements TelloSocket {
 
@@ -32,18 +31,12 @@ export class DroneStateSocket implements TelloSocket {
      * @param state drone state in string format
      */
     private parseState(state: string): { [key: string]: any } {
-        // const droneState: String[] = state.split(';');
         let droneState: { [key: string]: any } = {};
 
         for (let stateProperty of state.split(';')) {
             let statePropertyArray: string[] = stateProperty.split(":");
             droneState[statePropertyArray[0]] = parseInt(statePropertyArray[1], 10);
         }
-
         return droneState;
-
-
     }
-
-
 }
